@@ -21,9 +21,10 @@ class AlbumRepository extends ServiceEntityRepository
         parent::__construct($registry, Album::class);
     }
 
-//    /**
-//     * @return Album[] Returns an array of Album objects
-//     */
+   /**
+    * @return Album[] Returns an array of Album objects
+    */
+    
    public function listeAlbumsComplete(): array
    {
        return $this->createQueryBuilder('a')

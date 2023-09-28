@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Fiche Artistes{% endblock %}
+
+{% block body %}
+<h1 class="pt-2 text-center">Fiche de l'artiste</h1>
+<hr>
+<div class="row pt-2">
+    {% set nbAlbums = leArtiste.albums|length %}
+    <div class="card mb-3">
+        <h4 class="card-header">{{ leArtiste.nom }}</h4>
+        <div class="row">
+            <div class="col-3 d-flex align-items-center mx-auto">
+                <img class="avatar mx-auto d-block" style="height: auto; width: 250px; display: block;" src="{{ leArtiste.image }}"></img>
+            </div>
+            <div class="col">
+                <div class="card-body">
+                    <h5 class="card-title">{{ nbAlbums }}{% if nbAlbums > 1 %} albums {% else %} album {% endif %}</h5>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">{{ leArtiste.description|raw }}</font></font></p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                    {% if leArtiste.type ==0 %} Artiste solo {% else %} Groupe {% endif %}</font></font></li>
+                    <li class="list-group-item"><a href="{{ leArtiste.site }}">son site web</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<table class="table table-hover mx-auto">
+  <thead>
+    <tr>
+      <th scope="col-3">Photo</th>
+      <th scope="col-4">Nom</th>
+      <th scope="col-1">Date</th>
+      <th scope="col-3">Styles</th>
+      <th scope="col-1">Morceaux</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for leAlbum in leArtiste.albums %}
+    <tr>     
+      <td><img class="miniature" src="{{ leAlbum.image }}" alt="album de l'artiste"></td>
+      <td scope="row"><a href="{{ path('ficheAlbum', {'id': leAlbum.id}) }}">{{ leAlbum.nom }}</a></td>
+      <td>{{ leAlbum.date }}</td>
+      <td>
+        {% for leStyle in leAlbum.styles %}
+          <span style="background-colo: {{leStyle.couleur}};">{{ leStyle.nom }}</span>
+        {% endfor %}
+      </td>
+      <td>{{ leAlbum.morceaux|length }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

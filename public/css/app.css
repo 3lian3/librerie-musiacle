@@ -1,3 +1,8 @@
+body {
+    font-family: 'Nunito', sans-serif;
+    background-image: url("{{ asset('../ressources/bg.jpg') }}");
+}
+
 .avatar {
     border-radius: 50%;  
 }

@@ -34,23 +34,23 @@
               </div>
           </div>
     </div>
-<table class="table table-hover mx-auto">
-  <thead>
-    <tr>
-      <th scope="col-3">Piste</th>
-      <th scope="col-3">Titre</th>
-      <th scope="col-1">Durée</th>
-      <th scope="col-5">Note</th>
-    </tr>
-  </thead>
-  <tbody>
-  {% for leMorceau in leAlbum.morceaux %}
-    <tr>     
-      <td scope="row">{{ leMorceau.piste}}</td>
-      <td>{{ leMorceau.titre }}</td>
-      <td>{{ leMorceau.duree }}</td>
-    </tr>
-  {% endfor %}
-  </tbody>
-</table>
+  <table class="table table-hover mx-auto">
+    <thead>
+      <tr>
+        <th scope="col-3">Piste</th>
+        <th scope="col-3">Titre</th>
+        <th scope="col-1">Durée</th>
+        <th scope="col-5">Note</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for leMorceau in leAlbum.morceaux %}
+        <tr>     
+          <td scope="row">{{ leMorceau.piste}}</td>
+          <td>{{ leMorceau.titre }}</td>
+          <td>{{ leMorceau.duree }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 {% endblock %}

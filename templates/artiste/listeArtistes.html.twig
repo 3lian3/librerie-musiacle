@@ -15,10 +15,10 @@
                     <h5 class="card-title">
                     <a href="{{ path('ficheArtiste', {'id': leArtiste.id}) }}" class="badge bg-success">{{ nbAlbums }}{% if nbAlbums > 1 %} albums {% else %} album {% endif %}</a></h5>
                 </div>
-                <img class="avatar mx-auto d-block" style="height: auto; width: 250px; display: block;" src="{{ leArtiste.image }}">
+                <img class="avatar mx-auto d-block" style="height: auto; width: 100px; display: block;" src="{{ leArtiste.image }}">
                 </img>
                 <div class="card-body" style="height: 250px">
-                    <p class="card-text">{{leArtiste.description|slice(0, 200)|raw}} ...</p>
+                    <p class="card-text">{{leArtiste.description|slice(0, 150)|raw}} ...</p>
                 </div>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">

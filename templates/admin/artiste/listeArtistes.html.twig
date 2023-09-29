@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des artistes{% endblock %}
+
+{% block body %}
+    <h1 class="pt-2 text-center">Gestion des Artistes</h1>
+    <hr>
+    <a href="{{ path('admin_artiste_ajout') }}" class="btn btn-success">Ajouter un artiste</a>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+            <th scope="col-1"></th>
+            <th scope="col-2">Nom</th>
+            <th scope="col-6">Détail</th>
+            <th scope="col-3">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+    {% for leArtiste in lesArtistes %}
+        {% set nbAlbums = leArtiste.albums|length %}
+            <tr>
+                <td scope="col-1"><img class="avatar mx-auto" style="height: auto; width: 100px; display: block;"src="{{ leArtiste.image }}">
+                </img></td>
+                <td scope="col-2"><a href="{{ path('ficheArtiste', {'id': leArtiste.id}) }}">{{leArtiste.nom}}</a></td>
+                <td scope="col-7">
+                <p class="d-flex">
+                    <span class="align-self-center badge bg-success">{{ nbAlbums }}{% if nbAlbums > 1 %} albums {% else %} album {% endif %}</span>
+                    <span class="align-self-center badge bg-info mx-3">{% if leArtiste.type ==0 %} Artiste solo {% else %} Groupe {% endif %}</span>
+                    <span class="align-self-center ml-auto">{{leArtiste.site}}</span>
+                </p>
+                <p>
+                    {{leArtiste.description|slice(0, 150)|raw}} ...
+                </p>
+                </td>
+                <td scope="col-2">
+                    <a href="#" class="btn btn-primary m-2"><i class="fas fa-pen"></i></a>
+                    <a type="button" class="btn btn-danger m-2" data-bs-toggle="modalSimple" data-bs-target="#exampleModal"><i class="fas fa-trash-alt"></i></a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="navigation d-flex align-items-center justify-content-center">
+    {{ knp_pagination_render(lesArtistes) }}
+    </div>  
+
+{% endblock %}

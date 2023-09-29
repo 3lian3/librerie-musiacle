@@ -5,6 +5,7 @@
         <title>{% block title %}Donkey Music{% endblock %}</title>
         <link rel="stylesheet" href="https://bootswatch.com/5/flatly/bootstrap.min.css">
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+        <script src="https://kit.fontawesome.com/7fd6553645.js" crossorigin="anonymous"></script>
         {% block stylesheets %}{% endblock %}
    
     </head>
@@ -21,14 +22,17 @@
                             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Gestion des artistes</a>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="{{ path('artistes')}}">Liste des artistes</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Ajouter un artiste</a>
-                            </div>
-                        </li>
+                            </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Gestion des albums</a>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="{{ path('albums')}}">Liste des albums</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Administartion</a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="{{ path('admin_artistes')}}">Gestion des Artistes</a>
                             </div>
                         </li>
                     </ul>
@@ -36,9 +40,17 @@
             </div>
         </nav>
         <div class="container">
+        {# message flash #}
+        {% for label, messages in app.flashes %}
+        <div class="alert alert-{{label}} mt-3">
+            {% for message in messages %}
+                <p>{{message}}</p>  
+            {% endfor %}
+        </div>
+            
+        {% endfor %}
         {% block body %}{% endblock %}
         </div>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>    
     {% block javascripts %}{% endblock %}
     </body>

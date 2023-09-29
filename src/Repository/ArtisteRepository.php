@@ -4,6 +4,8 @@ namespace App\Repository;
 
 use App\Entity\Artiste;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\Query;
+use Doctrine\ORM\Query as ORMQuery;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -22,17 +24,16 @@ class ArtisteRepository extends ServiceEntityRepository
     }
 
    /**
-    * @return Artiste[] Returns an array of Artiste objects
+    * @return Query Returns an array of Artiste objects
     */
 
-   public function listeArtistesComplete(): array
+   public function listeArtistesComplete(): ?ORMQuery
    {
        return $this->createQueryBuilder('art')
             ->select('art', 'a')
             ->innerJoin('art.albums', 'a')
             ->orderBy('art.nom', 'ASC')
             ->getQuery()
-            ->getResult()
        ;
    }
 

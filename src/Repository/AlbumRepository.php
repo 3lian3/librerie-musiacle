@@ -2,8 +2,11 @@
 
 namespace App\Repository;
 
+
 use App\Entity\Album;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\Query;
+use Doctrine\ORM\Query as ORMQuery;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -22,10 +25,10 @@ class AlbumRepository extends ServiceEntityRepository
     }
 
    /**
-    * @return Album[] Returns an array of Album objects
+    * @return Query Returns an array of Album objects
     */
     
-   public function listeAlbumsComplete(): array
+   public function listeAlbumsComplete(): ?ORMQuery
    {
        return $this->createQueryBuilder('a')
             ->select('a', 's', 'art', 'm')
@@ -34,7 +37,6 @@ class AlbumRepository extends ServiceEntityRepository
             ->innerJoin('a.morceaux', 'm')
             ->orderBy('a.nom', 'ASC')
             ->getQuery()
-            ->getResult()
        ;
    }
 

@@ -5,23 +5,42 @@ namespace App\Entity;
 use App\Repository\StyleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: StyleRepository::class)]
+#[UniqueEntity(
+    fields: ["nom"],
+    errorPath: "nom",
+    message: "Ce nom est déjà utilisé."
+)]
+#[UniqueEntity(
+    fields: ["couleur"],
+    errorPath: "couleur",
+    message: "Cette couleur est déjà associée à un style."
+)]
 class Style
 {
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     #[ORM\Column]
-    private ?int $id = null;
+      private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length(
+        min: 2, 
+        max: 100, 
+        minMessage: "Le nom doit contenir au moins {{ limit }} caractères.", 
+        maxMessage: "Le nom ne peut contenir plus de {{ limit }} caractères."
+    )]
     private ?string $nom = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\NotBlank(message: "La couleur est obligatoire.")]
     private ?string $couleur = null;
 
-    #[ORM\ManyToMany(targetEntity: Album::class, inversedBy: 'styles')]
+    #[ORM\ManyToMany(targetEntity: Album::class, mappedBy: 'styles')]
     private Collection $albums;
 
     public function __construct()

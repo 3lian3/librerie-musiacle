@@ -60,13 +60,13 @@ class ArtisteController extends AbstractController
         if ($nbAlbums > 0) {
             $this->addFlash("danger", "Impossible de supprimer cet artiste car $nbAlbums albums(s) y sont associés");
 
-            return $this->redirectToRoute('admin_artistes');
+            // return $this->redirectToRoute('admin_artistes');
         } else {
             $manager->remove($artiste);
             $manager->flush();
             $this->addFlash('success', 'L\'artiste a bien été supprimé');
         }
-
+        
         return $this->redirectToRoute('admin_artistes');
     }
 }

@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajout album{% endblock %}
+
+{% block body %}
+
+    <h1 class="pt-2 text-center">
+    {% if (app.request.attributes.get('_route') == "admin_album_ajout") %}
+        Ajout  
+    {% else %}
+        Modification
+    {% endif %}
+    d'un album</h1>
+
+    {{ form_start(formAlbum, {'attr':{'novalidate':'novalidate'}}) }}
+    
+    <div class="row">
+    <div class="col"> {{ form_row(formAlbum.nom) }}</div>
+    <div class="col">{{ form_row(formAlbum.image) }}</div>
+    </div>
+    <div class="row">
+        <div class="col">{{ form_row(formAlbum.date) }}</div>
+        <div class="col">{{ form_row(formAlbum.artiste) }}</div>
+        <div class="col">{{ form_row(formAlbum.styles) }}</div>
+    </div>
+    <div class="row">
+        <div class="col"><a href="{{ path('admin_albums')}}" class="btn btn-success w-100 d-block">Annuler</a></div>
+        <div class="col"><input type="submit" class="btn btn-warning w-100 d-block" value=
+        {% if (app.request.attributes.get('_route') == "admin_album_ajout") %}
+            Ajouter un album
+        {% else %}
+            Modifier une album
+        {% endif %} "l'album"></div>
+    </div>
+
+    {{ form_end(formAlbum) }}
+
+{% endblock %}

@@ -3,10 +3,11 @@
 namespace App\Repository;
 
 use App\Entity\Artiste;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\DBAL\Query;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Query as ORMQuery;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Artiste>
@@ -49,6 +50,12 @@ class ArtisteRepository extends ServiceEntityRepository
             ->orderBy('art.nom', 'ASC')
             ->getQuery()
        ;
+   }
+
+   public function listeArtisteSimple(): ?QueryBuilder
+   {
+        return $this->createQueryBuilder('art')
+                    ->orderBy('art.nom', 'ASC');
    }
 
 //    public function findOneBySomeField($value): ?Artiste

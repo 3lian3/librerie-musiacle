@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\MorceauRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: MorceauRepository::class)]
 class Morceau
@@ -14,6 +16,12 @@ class Morceau
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length(
+        min: 1, 
+        max: 100, 
+        minMessage: "Le nom doit contenir au moins {{ limit }} caractères.", 
+        maxMessage: "Le nom ne peut contenir plus de {{ limit }} caractères."
+    )]
     private ?string $titre = null;
 
     #[ORM\Column(length: 255)]

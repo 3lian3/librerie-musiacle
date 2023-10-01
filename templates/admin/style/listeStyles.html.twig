@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des styles{% endblock %}
+
+{% block body %}
+    <h1 class="pt-2 text-center">Gestion des Styles</h1>
+    <hr>
+    <a href="{{ path('admin_style_ajout') }}" class="btn btn-success">Ajouter un style</a>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+            <th scope="col-3">Couleur</th>
+            <th scope="col-5">Nom</th>
+            <th scope="col-2"></th>
+            <th scope="col-2">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+    {% for leStyle in lesStyles %}
+        {% set nbAlbums = leStyle.albums|length %}
+            <tr>
+                <td scope="col-3"><span class="badge" style="display: inline-block; width: 50px; height: 20px; background-color: {{leStyle.couleur}};"></span></td>
+                <td scope="col-5">{{leStyle.nom}}</td>
+                <td scope="col-2">
+                <span class="align-self-center badge bg-success">{{ nbAlbums }}{% if nbAlbums > 1 %} albums {% else %} album {% endif %}</span>
+                </td>
+                <td scope="col-2">
+                    <a href="{{ path('admin_style_modif', {'id': leStyle.id}) }}" class="btn btn-primary m-2"><i class="fas fa-pen"></i></a>
+                    <a class="btn btn-danger m-2" 
+                    data-bs-toggle="modal" 
+                    data-bs-target="#modalSimple"
+                    data-titre="Suppression d'un style"
+                    data-message="Voulez-vous supprimer le style {{ leStyle.nom }} ?"
+                    data-libelleBouton="Supprimer le style"
+                    data-lien="{{ path('admin_style_suppression', {'id': leStyle.id}) }}"><i class="fas fa-trash-alt"></i></a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="navigation d-flex align-items-center justify-content-center">
+    {{ knp_pagination_render(lesStyles) }}
+    </div> 
+{% endblock %}
+{% block javascripts %}
+ {% include("include/_modale.html.twig") %} 
+{% endblock %}

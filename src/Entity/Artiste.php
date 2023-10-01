@@ -5,9 +5,16 @@ namespace App\Entity;
 use App\Repository\ArtisteRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ArtisteRepository::class)]
+#[UniqueEntity(
+    fields: ["nom"],
+    errorPath: "nom",
+    message: "Ce nom est déjà utilisé."
+)]
 class Artiste
 {
     #[ORM\Id]
@@ -16,6 +23,13 @@ class Artiste
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Le nom est obligatoire.")]
+    #[Assert\Length(
+        min: 1, 
+        max: 100, 
+        minMessage: "Le nom doit contenir au moins {{ limit }} caractères.", 
+        maxMessage: "Le nom ne peut contenir plus de {{ limit }} caractères."
+    )]
     private ?string $nom = null;
 
     #[ORM\Column(type: 'text')]

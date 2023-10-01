@@ -6,8 +6,14 @@ use App\Repository\AlbumRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AlbumRepository::class)]
+#[UniqueEntity(
+    fields: ["nom", "artiste"],
+    message: "Ce nom est déjà utilisé."
+)]
 class Album
 {
     #[ORM\Id]
@@ -16,9 +22,22 @@ class Album
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length(
+        min: 1, 
+        max: 100, 
+        minMessage: "Le nom doit contenir au moins {{ limit }} caractères.", 
+        maxMessage: "Le nom ne peut contenir plus de {{ limit }} caractères."
+    )]
+    #[Assert\NotBlank(message: "Le nom est obligatoire.")]
     private ?string $nom = null;
 
     #[ORM\Column]
+    #[assert\Range(
+        min: 1900, 
+        max: 2999, 
+        notInRangeMessage: "La date doit être comprise entre {{ min }} et {{ max }}.",
+        invalidMessage: "La date doit être un nombre."
+    )]
     private ?int $date = null;
 
     #[ORM\Column(length: 255)]
@@ -26,12 +45,14 @@ class Album
 
     #[ORM\ManyToOne(inversedBy: 'albums')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotNull(message: "L'artiste est obligatoire.")]
     private ?Artiste $artiste = null;
 
     #[ORM\OneToMany(mappedBy: 'album', targetEntity: Morceau::class)]
     private Collection $morceaux;
 
-    #[ORM\ManyToMany(targetEntity: Style::class, mappedBy: 'albums')]
+    #[ORM\ManyToMany(targetEntity: Style::class, inversedBy: 'albums')]
+    #[Assert\Count(min: 1, minMessage: "Au moins un style doit être sélectionné.")]
     private Collection $styles;
 
     public function __construct()

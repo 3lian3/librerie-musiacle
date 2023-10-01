@@ -23,13 +23,13 @@
                 </img></td>
                 <td scope="col-2"><a href="{{ path('ficheArtiste', {'id': leArtiste.id}) }}">{{leArtiste.nom}}</a></td>
                 <td scope="col-7">
-                <p class="d-flex">
+                <p class="d-flex flex-row">
                     <span class="align-self-center badge bg-success">{{ nbAlbums }}{% if nbAlbums > 1 %} albums {% else %} album {% endif %}</span>
                     <span class="align-self-center badge bg-info mx-3">{% if leArtiste.type ==0 %} Artiste solo {% else %} Groupe {% endif %}</span>
                     <span class="align-self-center ml-auto">{{leArtiste.site}}</span>
                 </p>
                 <p>
-                    {{leArtiste.description|slice(0, 150)|raw}} ...
+                    {{leArtiste.description|slice(0, 100)|raw}} ...
                 </p>
                 </td>
                 <td scope="col-2">

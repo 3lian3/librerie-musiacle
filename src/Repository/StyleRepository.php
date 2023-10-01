@@ -3,8 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\Style;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Style>
@@ -21,28 +23,22 @@ class StyleRepository extends ServiceEntityRepository
         parent::__construct($registry, Style::class);
     }
 
-//    /**
-//     * @return Style[] Returns an array of Style objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('s')
-//            ->andWhere('s.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('s.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    /**
+    * @return Query Returns an array of Artiste objects
+    */
 
-//    public function findOneBySomeField($value): ?Style
-//    {
-//        return $this->createQueryBuilder('s')
-//            ->andWhere('s.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function listeStylesCompletePaginee(): ?Query
+    {
+        return $this->createQueryBuilder('s')
+             ->select('s', 'alb')
+             ->leftJoin('s.albums', 'alb')
+             ->orderBy('s.nom', 'ASC')
+             ->getQuery()
+        ;
+    }
+    public function listeStyleSimple(): ?QueryBuilder
+   {
+        return $this->createQueryBuilder('s')
+                    ->orderBy('s.nom', 'ASC');
+   }
 }

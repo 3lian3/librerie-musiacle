@@ -59,7 +59,7 @@ class AlbumType extends AbstractType
                 'multiple' => true,
                 'by_reference' => false,
                 'attr' => [
-                    'placeholder' => 'Saisir le nom du Style'
+                    'class' => 'selectStyles',
                 ]
             ])
         ;

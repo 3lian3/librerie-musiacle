@@ -1,0 +1,4 @@
+# config/packages/tinymce.yaml
+tinymce:
+    skin: appstack
+    content_css: appstack

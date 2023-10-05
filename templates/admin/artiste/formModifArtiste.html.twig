@@ -6,7 +6,6 @@
     <h1 class="pt-2 text-center">Modification d'un Artiste</h1>
 
     {{ form_start(formArtiste) }}
-
     {{ form_row(formArtiste.nom,) }}
     {{ form_row(formArtiste.description) }}
     <div class="row">
@@ -21,4 +20,15 @@
 
     {{ form_end(formArtiste) }}
 
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+
+    <script src="{{ asset('bundles/tinymce/ext/tinymce/tinymce.min.js') }}"></script>
+    <script>
+    tinymce.init({
+        selector: '#mon_textarea'
+    });
+    </script>
+   
 {% endblock %}

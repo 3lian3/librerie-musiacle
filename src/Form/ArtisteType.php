@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Artiste;
+use Eckinox\TinymceBundle\Form\Type\TinymceType;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -23,10 +25,11 @@ class ArtisteType extends AbstractType
                     'placeholder' => 'Saisir le nom de l\'artiste'
                 ]
             ])
-            ->add('description', TextareaType::class, [
+            ->add('description', TinymceType::class, [
                 'label' => 'Description de l\'artiste',
                 'attr' => [
-                    'placeholder' => 'Saisir la description de l\'artiste'
+                    'placeholder' => 'Saisir la description de l\'artiste',
+                    'toolbar' => 'bold italic underline | bullist numlist'
                 ]
             ])
             ->add('site', UrlType::class, [

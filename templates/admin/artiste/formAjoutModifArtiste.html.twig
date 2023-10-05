@@ -13,7 +13,6 @@
     d'un artiste</h1>
 
     {{ form_start(formArtiste, {'attr':{'novalidate':'novalidate'}}) }}
-    
     {{ form_row(formArtiste.nom) }}
     {{ form_row(formArtiste.description) }}
     <div class="row">
@@ -32,5 +31,16 @@
     </div>
 
     {{ form_end(formArtiste) }}
+
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+
+    <script src="{{ asset('bundles/tinymce/ext/tinymce/tinymce.min.js') }}"></script>
+    <script>
+    tinymce.init({
+        selector: '#mon_textarea'
+    });
+    </script>
 
 {% endblock %}

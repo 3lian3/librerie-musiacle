@@ -21,11 +21,11 @@
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
                             <a class="nav-link" href="{{ path('artistes')}}">Liste des artistes</a> 
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ path('albums')}}">Liste des albums</a>
-                            </div>
                         </li>
-                        {% if app.user and is_granted('ROLE_ADMIN')%}
+                        {% if app.user and is_granted ('ROLE_ADMIN')%}
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Administartion</a>
                                 <div class="dropdown-menu">

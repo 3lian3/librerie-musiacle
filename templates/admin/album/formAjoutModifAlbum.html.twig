@@ -20,14 +20,23 @@
 	{{ form_start(formAlbum, {'attr':{'novalidate':'novalidate'}}) }}
 
 	<div class="row">
-		<div class="col">
-			{{ form_row(formAlbum.nom) }}</div>
-		<div class="col">{{ form_row(formAlbum.image) }}</div>
-	</div>
-	<div class="row">
-		<div class="col">{{ form_row(formAlbum.date) }}</div>
-		<div class="col">{{ form_row(formAlbum.artiste) }}</div>
-		<div class="col">{{ form_row(formAlbum.styles) }}</div>
+		<div class="col-8">
+			{{ form_row(formAlbum.nom) }}
+			{{ form_row(formAlbum.date) }}
+			{{ form_row(formAlbum.artiste) }}
+			{{ form_row(formAlbum.styles) }}
+		</div>
+		<div class="col-4">
+			<div>
+			<img src="{{ asset("images/albums/" ~ formAlbum.image.vars.value)}}" id="imageAffichee" alt="pochette de l'album" class="rounded mx-auto d-block img-thumbnail mt-4" style="height: 220px; wight: 220px;">
+			</div>
+			<br>
+			<div>
+			{{ form_row(formAlbum.imageFile) }}
+			{{ form_errors(formAlbum.imageFile) }}
+			<a class="btn btn-primary d-block center" id="chargePochette"><i class="fas fa-upload"></i>Charger la pochette</a>
+			</div>
+		</div>
 	</div>
 	<div class="row">
 		<div class="col">
@@ -47,4 +56,5 @@
         $('.selectStyles').select2();
         });
 	</script>
+	<script src="{{ asset("js/gestionUpload.js") }}" defer ></script>
 {% endblock %}

@@ -7,11 +7,15 @@ use App\Entity\Style;
 use App\Entity\Artiste;
 use App\Repository\StyleRepository;
 use App\Repository\ArtisteRepository;
+use PHPUnit\TextUI\CliArguments\Mapper;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
 
@@ -20,7 +24,31 @@ class AlbumType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('image')
+            ->add('imageFile', FileType::class,[
+                'mapped'=> false,
+                'required' => false,
+                'label' => 'Image de l\'album',
+                'attr' => [
+                    'accept' => '.jpeg, .png, .jpg'
+                ],
+                'row_attr' => [
+                    'class' => 'd-none'
+                ],
+                'constraints' => [
+                    new Image([
+                        'maxSize' => '1024k',
+                        'maxSizeMessage' => 'Le fichier ne doit pas dépasser 1Mo',
+                        'mimeTypes' => [
+                            'image/jpeg',
+                            'image/png',
+                            'image/jpg',
+                            'image/PNG',
+                        ],
+                        'mimeTypesMessage' => 'Merci de choisir un fichier de type jpeg, jpg ou png',
+                    ])
+                ],
+            ])
+            ->add('image', HiddenType::class)
             ->add('nom', TextType::class,[
                 'label' => 'Nom de l\'album',
                 'required'=>'false',
@@ -28,7 +56,6 @@ class AlbumType extends AbstractType
                     'placeholder' => 'Saisir le nom de l\'album'
                 ]
             ])
-        
             ->add('date', IntegerType::class,[
                 'label' => 'Année de sortie',
                 'required'=>'false',

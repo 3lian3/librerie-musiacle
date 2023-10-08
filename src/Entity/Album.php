@@ -55,10 +55,15 @@ class Album
     #[Assert\Count(min: 1, minMessage: "Au moins un style doit être sélectionné.")]
     private Collection $styles;
 
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    private ?\DateTimeImmutable $updatedAt = null;
+
     public function __construct()
     {
         $this->morceaux = new ArrayCollection();
         $this->styles = new ArrayCollection();
+        $this->setUpdatedAt(new \DateTimeImmutable());
+        $this->setImage("pochetteAlbum.jpg");
     }
 
     public function getId(): ?int
@@ -174,6 +179,18 @@ class Album
         if ($this->styles->removeElement($style)) {
             $style->removeAlbum($this);
         }
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): static
+    {
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }

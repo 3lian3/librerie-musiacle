@@ -15,13 +15,14 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         $faker = FakerFactory::create('fr_FR');
-
+        $color = explode(',', "blue,green,yellow,orange,purple,pink,darkorchid,deeppink,firebrick,forestgreen,gold,lawngreen,lightcoral,lightseagreen,lightsalmon,lightsteelblue,mediumblue");
+        
         $lesStyles = $this->chargeFichier("style.csv");
         foreach ($lesStyles as $value) {
             $style = new Style();
             $style-> setId(intval($value[0]))
                     ->setNom($value[1])
-                    ->setCouleur($faker->safeColorName());
+                    ->setCouleur($color[array_rand($color)]);
             $manager->persist($style);
             $this->addReference("style". $style->getId(), $style);
         }

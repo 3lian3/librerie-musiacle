@@ -22,7 +22,7 @@
     {% for leAlbum in lesAlbums %}
         {% set nbMorceaux = leAlbum.morceaux|length %}
             <tr>
-                <td scope="col-1"><img class="avatar mx-auto" style="height: 100px ; width: 100px; display: block;"src="{{ leAlbum.image }}">
+                <td scope="col-1"><img class="avatar mx-auto" style="height: 100px ; width: 100px; display: block;"src="{{ asset("images/albums/" ~ leAlbum.image) }}">
                 </img></td>
                 <td scope="col-3">{{leAlbum.nom}}</td>
                 <td scope="col-1">{{leAlbum.date}}</td>

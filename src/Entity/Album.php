@@ -48,7 +48,7 @@ class Album
     #[Assert\NotNull(message: "L'artiste est obligatoire.")]
     private ?Artiste $artiste = null;
 
-    #[ORM\OneToMany(mappedBy: 'album', targetEntity: Morceau::class)]
+    #[ORM\OneToMany(mappedBy: 'album', targetEntity: Morceau::class, cascade:['persist', 'remove'], orphanRemoval:true)]
     private Collection $morceaux;
 
     #[ORM\ManyToMany(targetEntity: Style::class, inversedBy: 'albums')]
@@ -134,22 +134,23 @@ class Album
         return $this->morceaux;
     }
 
-    public function addMorceaux(Morceau $morceaux): static
+    public function addMorceau(Morceau $morceau): static
     {
-        if (!$this->morceaux->contains($morceaux)) {
-            $this->morceaux->add($morceaux);
-            $morceaux->setAlbum($this);
+        if (!$this->morceaux->contains($morceau)) {
+            $this->morceaux[] = $morceau;
+            $morceau->setAlbum($this);
         }
 
         return $this;
     }
 
-    public function removeMorceaux(Morceau $morceaux): static
+    public function removeMorceau(Morceau $morceau): static
     {
-        if ($this->morceaux->removeElement($morceaux)) {
+        if ($this->morceaux->contains($morceau)) {
+            $this->morceaux->removeElement($morceau); 
             // set the owning side to null (unless already changed)
-            if ($morceaux->getAlbum() === $this) {
-                $morceaux->setAlbum(null);
+            if ($morceau->getAlbum() === $this) {
+                $morceau->setAlbum(null);
             }
         }
 

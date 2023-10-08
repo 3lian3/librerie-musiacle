@@ -11,6 +11,7 @@ use PHPUnit\TextUI\CliArguments\Mapper;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -88,6 +89,14 @@ class AlbumType extends AbstractType
                 'attr' => [
                     'class' => 'selectStyles',
                 ]
+            ])
+            ->add('morceaux', CollectionType::class,[
+                'entry_type' => MorceauType::class,
+                'label' => false,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'prototype' => true,
+                'by_reference' => false,
             ])
         ;
     }

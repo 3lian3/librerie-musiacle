@@ -38,6 +38,34 @@
 			</div>
 		</div>
 	</div>
+	<h3>Lisete des morceaux de l'album</h3>
+	<button type="button" class="add-morceau btn btn-primary mb-2">Ajouter un morceau</button>
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th scope="col-6">Titre</th>
+				<th scope="col-2">Durée</th>
+				<th scope="col-2">Piste</th>
+				<th scope="col-2">Actions</th>
+			</tr>
+		</thead>
+		<tbody id="sousForm"
+			data-index="{{ formAlbum.morceaux|length>0 ? formAlbum.morceaux|last.vars.name+1 : 0 }}"
+			data-prototype="{{ _self.afficheMorceau(formAlbum.morceaux.vars.prototype)|e('html_attr') }}"
+			>
+		{% for morceau in formAlbum.morceaux %}
+			{{ _self.afficheMorceau(morceau) }}
+		{% endfor %}
+		{% macro afficheMorceau(morceau) %}
+			<tr>
+				<td class="col-6">{{form_row(morceau.titre)}}</td>
+				<td class="col-2">{{form_row(morceau.duree)}}</td>
+				<td class="col-2">{{form_row(morceau.piste)}}</td>
+				<td class="col-2"><a class="supprMorceau btn btn-danger"><i class="fas fa-trash"></i></a></td>
+			</tr>
+		{% endmacro %}
+		</tbody>
+	</table>
 	<div class="row">
 		<div class="col">
 			<a href="{{ path('admin_albums')}}" class="btn btn-success w-100 d-block">Annuler</a>
@@ -57,4 +85,32 @@
         });
 	</script>
 	<script src="{{ asset("js/gestionUpload.js") }}" defer ></script>
+	<script>
+		window.onload=()=>{
+		const btn_add_morceau=document.querySelector('.add-morceau');
+		btn_add_morceau.addEventListener('click', addFormToCollection)
+		listenSuppr()
+		};
+
+		function addFormToCollection(){
+			const collection=document.querySelector('#sousForm');
+			let index=collection.dataset.index;
+			let proto=collection.dataset.prototype;
+			proto=proto.replace(/__name__/g, index);
+			let elementAAjouter=document.createElement('tr');
+			elementAAjouter.innerHTML=proto;
+			collection.appendChild(elementAAjouter);
+			collection.dataset.index++;
+			listenSuppr();
+		};
+		
+		function listenSuppr(){
+			const listeBoutons=document.querySelectorAll('.supprMorceau');
+			listeBoutons.forEach((bouton)=>{
+				bouton.addEventListener('click', function(){
+					this.parentNode.parentNode.remove();
+				})
+			})
+		}
+	</script>
 {% endblock %}
